@@ -70,5 +70,13 @@ national_parks = {'Yellowstone':
 			}
 		}
 	}
-print(national_parks.keys())
-				     
+
+top_level_keys = national_parks.keys()
+print(top_level_keys)
+
+second_level_keys = []
+
+for key in top_level_keys:
+	second_level_keys = national_parks[key].keys()
+
+print(second_level_keys)
