@@ -71,12 +71,33 @@ national_parks = {'Yellowstone':
 		}
 	}
 
-top_level_keys = national_parks.keys()
-print(top_level_keys)
+def input_prompt(dictionary):
+	print(dictionary.keys())
+	user_input = input ('What key would you like to interact with?\n')
+	working_object = dictionary[user_input]
+	if (isinstance(working_object,dict)):
+		working_dictionary = dictionary[user_input]
+		print(working_dictionary.keys())
+		user_input = input('Would you like to:\n1: add a key\n2: delete a key\n3: choose another key\n')
+		if ('1' == user_input or 'add a key' == user_input):
+			add_key(working_dictionary)
+		elif ('2' == user_input or 'delete a key' == user_input):
+			delete_key(working_dictionary)
+		else:
+			input_prompt(working_dictionary)
+	else:
+		print(working_object)
 
-second_level_keys = []
+def delete_key(dictionary):
+	user_input = input('What key would you like to delete?\n')
+	dictionary.pop(user_input, None)
+	input_prompt(dictionary)
 
-for key in top_level_keys:
-	second_level_keys = national_parks[key].keys()
+def add_key(dictionary):
+	user_key = input('What key would you like to add?\n')
+	user_value = input('What is the value of this key?\n')
+	dictionary[user_key] = user_value
+	input_prompt(dictionary)
+	
+input_prompt(national_parks)
 
-print(second_level_keys)
