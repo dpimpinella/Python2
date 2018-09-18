@@ -71,33 +71,58 @@ national_parks = {'Yellowstone':
 		}
 	}
 
-def input_prompt(dictionary):
-	print(dictionary.keys())
-	user_input = input ('What key would you like to interact with?\n')
-	working_object = dictionary[user_input]
-	if (isinstance(working_object,dict)):
-		working_dictionary = dictionary[user_input]
-		print(working_dictionary.keys())
-		user_input = input('Would you like to:\n1: add a key\n2: delete a key\n3: choose another key\n')
+key_array = []
+
+def manipulate_dict(a_dictionary):
+		print('Keys at this level:')
+		print_keys(a_dictionary)
+		user_input = input('Would you like to:\n1: add a key\n2: delete a key\n3: choose a key\n4: print current dictionary\n')
 		if ('1' == user_input or 'add a key' == user_input):
-			add_key(working_dictionary)
+			add_key(a_dictionary)
 		elif ('2' == user_input or 'delete a key' == user_input):
-			delete_key(working_dictionary)
+			delete_key(a_dictionary)
+		elif ('3' == user_input or 'choose another key' == user_input):
+			user_input = input ('What key would you like to interact with?\n')
+			working_object = a_dictionary[user_input]
+			key_array.append(user_input)
+			if (isinstance(working_object,dict)):
+				working_dictionary = a_dictionary[user_input]
+				manipulate_dict(working_dictionary)		
+			else:
+				print('Value: ',working_object)
 		else:
-			input_prompt(working_dictionary)
-	else:
-		print(working_object)
-
-def delete_key(dictionary):
+			print(national_parks)
+			manipulate_dict(a_dictionary)	
+		
+def delete_key(a_dictionary):
 	user_input = input('What key would you like to delete?\n')
-	dictionary.pop(user_input, None)
-	input_prompt(dictionary)
+	a_dictionary.pop(user_input, None)
+	rebuild_dictionary(national_parks, a_dictionary)
+	manipulate_dict(a_dictionary)
 
-def add_key(dictionary):
+def add_key(a_dictionary):
 	user_key = input('What key would you like to add?\n')
 	user_value = input('What is the value of this key?\n')
-	dictionary[user_key] = user_value
-	input_prompt(dictionary)
-	
-input_prompt(national_parks)
+	a_dictionary[user_key] = user_value
+	rebuild_dictionary(national_parks, a_dictionary)
+	manipulate_dict(a_dictionary)
+
+def rebuild_dict(full_dict, dict_fragment):
+	length = len(key_array)
+	if (length == 4):
+		full_dict[key_array[0]][key_array[1][key_array[2][key_array[3]]]] = dict_fragment
+	elif (length == 3):
+		full_dict[key_array[0]][key_array[1]][key_array[2]] = dict_fragment
+	elif (length == 2):
+		full_dict[key_array[0]][key_array[1]] = dict_fragment
+	elif (length == 1):
+		full_dict = dict_fragment
+
+def print_keys(dict_to_print):
+	keys_to_print =  list(dict_to_print.keys())
+	for key in keys_to_print:
+		print(key %(keys_to_print))
+
+print_keys(national_parks)
+manipulate_dict(national_parks)
 
