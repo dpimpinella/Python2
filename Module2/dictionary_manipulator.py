@@ -97,14 +97,14 @@ def manipulate_dict(a_dictionary):
 def delete_key(a_dictionary):
 	user_input = input('What key would you like to delete?\n')
 	a_dictionary.pop(user_input, None)
-	rebuild_dictionary(national_parks, a_dictionary)
+	rebuild_dict(national_parks, a_dictionary)
 	manipulate_dict(a_dictionary)
 
 def add_key(a_dictionary):
 	user_key = input('What key would you like to add?\n')
 	user_value = input('What is the value of this key?\n')
 	a_dictionary[user_key] = user_value
-	rebuild_dictionary(national_parks, a_dictionary)
+	rebuild_dict(national_parks, a_dictionary)
 	manipulate_dict(a_dictionary)
 
 def rebuild_dict(full_dict, dict_fragment):
