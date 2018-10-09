@@ -1,6 +1,8 @@
 # ignore sandbox
 */sandbox.py
 
+# ignore generated json files
+*.json
 # Created by https://www.gitignore.io/api/visualstudiocode
 
 ### VisualStudioCode ###
