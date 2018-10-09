@@ -1,26 +1,36 @@
-import urllib.request
-import urllib.parse
 import json
+import urllib.parse
+import urllib.request
+
 from bs4 import BeautifulSoup
 
-def scrape_top_results(html):
+def scrape_top_results():
     """Scrapes the top results from a given SoundCloud search.
-    Args:
-        html: HTML from urllib request/response
     Returns:
         top_results: dictionary of song titles and links for the results that were scraped
-    """
-    results = []
+    """       
+    query = input('Which SoundCloud artist\'s top hits would you like to export? >> ').lower()
+    encoded_query = urllib.parse.quote(query)
+    url = 'https://soundcloud.com/search?q=' + encoded_query
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        html = response.read()
     soup = BeautifulSoup(html, 'html.parser')
     res = soup.ul.find_next_sibling("ul")
+    
+    results = []
     for item in res:
         result = {}
         if (item == '\n'):
             continue
-        result["song_title"] = item.a.contents
+        content = item.a.contents[0]
+        if (content.lower() == query):
+            continue
+        result["song_title"] = content
         result["link"] = 'https://soundcloud.com' + item.a["href"]
         results.append(result)
-    top_results = {"top_results": results}
+
+    top_results = {query: results}
     return top_results
 
 def write_results(top_results_dict):
@@ -35,16 +45,7 @@ def write_results(top_results_dict):
         outfile.flush()
         outfile.close()
 
-def get_query():
-    """
-    Gets search term from user.
-    """
-    query = input('What would you like to search for?')
-    query = urllib.parse.quote(query)
-    return query
+def main():
+    write_results(scrape_top_results())
 
-url = 'https://soundcloud.com/search?q=' + get_query()
-req = urllib.request.Request(url)
-with urllib.request.urlopen(req) as response:
-    html = response.read()
-write_results(scrape_top_results(html))
+main()
