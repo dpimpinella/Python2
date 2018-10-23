@@ -13,8 +13,8 @@ def scrape_top_results():
             were scraped
     """       
     
-    # Get user input, create a url to open with urllib urllib.parse.quote 
-    # replaces special characters to avoid errors in the query URL.
+    # Get user input, create a url to open with urllib. 
+    # urllib.parse.quote replaces special characters to avoid errors in the query URL.
     # Example:
     # urllib.parse.quote('/El Niño/') yields '/El%20Ni%C3%B1o/'
     query = input('Which SoundCloud artist\'s top hits would you like to export? >> ').lower()
@@ -43,11 +43,11 @@ def scrape_top_results():
         # Get song title from 'item' using BeautifulSoup.
         song_title = item.a.contents[0]
         
-        # This if block throws away results if the content is the same as input
+        # This if block throws away results if the contents are the same as input
         #  from the user.
-        # If the content is the same as the search, then the content is NOT a
-        #  song title, it is the artists name.
-        if (content.lower() == query):
+        # If the contents are the same as the search, then the content is NOT a
+        #  song title, it is the artists name, so we skip it with continue.
+        if (song_title.lower() == query):
             continue
         
         # Create a dictionary with 'song title' and 'link' keys
@@ -73,7 +73,7 @@ def write_results(top_results_dict):
         json.dump(top_results_dict,outfile, indent=4)
         outfile.flush()
         outfile.close()
-        
+
 # Run the program!
 def main():
     write_results(scrape_top_results())
