@@ -42,26 +42,38 @@ class TwitterSearch:
     API_SEARCH_ENDPOINT = 'https://api.twitter.com/1.1/search/tweets.json?q='
 
     def __init__(self, query, token):
-        self.query = query
-        self.token = token
-        self.search_results = self.send_search()
-        self.tweet_text = self.find_text()
+        self.query = self.modify_query(query)
+        self.token = token.bearer_token
+        self.count = 10
+        self.lang = 'en'
+        self.tweet_mode = 'extended'
+        self.Url_suffix = self.build_suffix()
+        self.search_results = self.send_search(token)
+        self.tweet_text = self.find_text()        
 
-    def send_search(self):
+    def modify_query(self,query):
+        modified_query = "{} -filter:retweets -filter:replies".format(query)
+        return modified_query
+
+    def build_suffix(self):
+        suffix = '&count={}&lang={}&tweet_mode={}'.format(self.count, self.lang, self.tweet_mode)
+        return suffix
+
+    def send_search(self,token):
         encoded_query = urllib.parse.quote(self.query.encode('utf-8'))
-        url = self.API_SEARCH_ENDPOINT + encoded_query
+        url = self.API_SEARCH_ENDPOINT + encoded_query + self.Url_suffix
         headers = {
-            'User-Agent':'TemperatureOfTheRoom',
-            'Authorization':'Bearer ' + token.bearer_token,
+            'User-Agent':'TemperatureOTheRoom',
+            'Authorization':'Bearer ' + self.token,
             'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}
         response = requests.get(url, headers = headers)
         results = json.loads(response.content)
         return results
-    
+
     def find_text(self):
         tweet_text = []
         for item in self.search_results['statuses']:
-            tweet_text.append(item['text'])
+            tweet_text.append(item['full_text'])
         return tweet_text
 
 class SentimentAnalysis:
@@ -74,7 +86,7 @@ class SentimentAnalysis:
         self.tweet_text = tweet_text
         self.sentiment_results = self.total_results()
 
-    def send_tweet_text(self, text):
+    def get_sentiment(self, text):
 
         headers = {
             'X-Mashape-Key':'Zx3Hnd9BrvmshEBx4i5UfCZlJqHKp1ddegSjsnmdXY62V9Ndsh',
@@ -85,19 +97,19 @@ class SentimentAnalysis:
             SentimentAnalysis.SENTIMENT_API_ENDPOINT,
             data = body,
             headers = headers)
-        result = json.loads(response.content)
-        result = result['label']
-        return result
+        sentiment_result = json.loads(response.content)
+        sentiment_result = sentiment_result['label']
+        return sentiment_result
     
     def total_results(self):
-        results = []
+        sentiment_results = []
         for item in self.tweet_text:
-            results.append(self.send_tweet_text(item))
-        return results
-
+            sentiment_results.append(self.get_sentiment(item))
+        return sentiment_results
 
 token = OAuthToken()
-search_results = TwitterSearch("donald trump -filter:retweets -filter:replies", token).tweet_text
+query = input("Enter your search criteria >> ")
+search_results = TwitterSearch("{} -filter:retweets -filter:replies".format(query), token).tweet_text
 
 
 sentiment = SentimentAnalysis(search_results)
