@@ -3,7 +3,7 @@
 file = open('9_2018_ACJ_daily_census_data.csv')
 
 # Read in the first line of the file, cast it to a string, and then split the 
-# string where there is a comman to get the headers from each column.
+# string where there is a comma to get the headers from each column.
 headers = str(file.readline()).split(',')
 
 # We are interested in the racial make up of those who are incarcerated.
