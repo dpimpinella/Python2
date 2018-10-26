@@ -1,9 +1,9 @@
 # API Project
 
-This project connects two APIs: The Twitter Standard Search API and the Text-Processing Sentiment Analysis API.
+This application connects two APIs: The Twitter Standard Search API and the Text-Processing Sentiment Analysis API.
 The goal was to analyze the sentiment of Tweets for a given search criteria, in order to gauge their "temperature" (i.e., are the Tweets positive or negative).
 
-The flow of this project is:
+The flow of this application is:
 
 User enters search query -> query is sent to Search API -> the Tweet text is pulled from the response -> Tweet text is sent to Sentiment Analysis API -> sentiment for each Tweet is displayed
 
