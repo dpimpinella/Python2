@@ -1,0 +1,23 @@
+{% load static %}
+{% include "tweet_sentiment/js_loader.html" %} 
+
+<link rel="stylesheet" type="text/css" href="{% static 'tweet_sentiment/style.css' %}">
+<body> 
+    <a href="{% url 'index' %}">New Search</a>
+    <div id="maindiv">         
+        <h1>Tweet sentiment results for '{{ query }}':</h1>            
+        <table>
+            {% if results %} 
+                {% for result in results %}
+                <tr>
+                    <td>{{result.1|safe}}</td>
+                    <td>{{result.0}}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <p> There are no results</p>
+            {% endif %}
+        </table> 
+    </div>
+</div>
+</body>
