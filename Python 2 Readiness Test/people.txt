@@ -1,0 +1,10 @@
+Name,Birth Year
+Kathy,1990
+Wendy,1985
+Ann,2001
+Bill,1991
+Isaac,1995
+Amy,1976
+Luke,1980
+Damon,1987
+Stella,1997
