@@ -27,7 +27,7 @@ Sample Output:
 
 ## Challenge 2
 
-Create a text file that lists the names of people from "people.txt" next to their birth year, sorted from oldest to youngest.
+Create a text file that lists the names from "people.txt" next to their birth year, sorted from oldest to youngest.
 
 Sample Input:
 ```
