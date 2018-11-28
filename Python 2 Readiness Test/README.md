@@ -6,11 +6,12 @@ Conjugate some verbs!
 
 Create a function that takes in the following list of verbs, and prints each verb next to it's correct past tense (i.e. add an -ed ending) and present participle (i.e. add an -ing ending): 
 
-['add', 'count', 'fix', 'join', 'open', 'perform', 'produce', 'refuse', 'snow', 'wander']
+```['add', 'count', 'fix', 'join', 'open', 'perform', 'produce', 'refuse', 'snow', 'wander']```
 
 For example, the verb "explain" is "explained" in the past tense, and "explaining" is it's present participle. 
 
 Sample Output:
+```
     add added adding
     count counted counting
     fix fixed fixing
@@ -21,6 +22,7 @@ Sample Output:
     refuse refused refusing
     snow snowed snowing
     wander wandered wandering
+ ```
 
 
 ## Challenge 2
