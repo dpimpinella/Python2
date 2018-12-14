@@ -195,9 +195,9 @@ def recency_score(x, ranges):
         if(item[0] <= x and x < item[1]):
             return 4 - index   
     
-donation_amts = pd.read_csv('EECM_gift_amounts_by_year.csv', 
+donation_amts = pd.read_csv('gift_amounts_by_year.csv', 
     index_col='Constituent ID')
-donation_counts = pd.read_csv('EECM_gift_counts_by_year.csv', 
+donation_counts = pd.read_csv('gift_counts_by_year.csv', 
     index_col='Constituent ID')
 
 rfm_data = pd.concat([recency(donation_amts),
