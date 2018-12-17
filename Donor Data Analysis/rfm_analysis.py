@@ -180,7 +180,7 @@ def recency_score(x, ranges):
     """ Calculates the recency score for a given data point.
 
     Args:
-        x: A data point corresponding to the years since last donation
+        x: A data point corresponding to the years since last donation.
         ranges: List of tuples containing the upper and lower bounds for 
         segments.
 
