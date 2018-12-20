@@ -188,12 +188,12 @@ def recency_score(x, ranges):
     contained. Returns NaN if the donor never donated in the timespan of the 
     data.
     """
-
+    MAXIMUM_SCORE = 4
     for index, item in enumerate(ranges):
         if(np.isnan(x)):
             return 0
         if(item[0] <= x and x < item[1]):
-            return 4 - index   
+            return MAXIMUM_SCORE - index   
     
 donation_amts = pd.read_csv('gift_amounts_by_year.csv', 
     index_col='Constituent ID')
