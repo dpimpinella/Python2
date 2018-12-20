@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from itertools import tee
 
+# Number of  segments you'd like to split donors in to.
 NUM_SEGMENTS = 4
 
 def recency(donation_amts):
