@@ -5,8 +5,10 @@ import numpy as np
 import pandas as pd
 from itertools import tee
 
-# Number of  segments you'd like to split donors in to.
 NUM_SEGMENTS = 4
+GIFT_AMOUNTS_BY_YEAR = 'EECM_gift_amounts_by_year.csv'
+GIFT_COUNTS_BY_YEAR = 'EECM_gift_counts_by_year.csv'
+INDEX_COLUMN = 'Constituent ID'
 
 def recency(donation_amts):
     """ Calculates the most recent year that a donor made a contribution, and 
@@ -181,7 +183,7 @@ def recency_score(x, ranges):
     """ Calculates the recency score for a given data point.
 
     Args:
-        x: A data point corresponding to the years since last donation.
+        x: A data point corresponding to the years since last donation
         ranges: List of tuples containing the upper and lower bounds for 
         segments.
 
@@ -189,21 +191,21 @@ def recency_score(x, ranges):
     contained. Returns NaN if the donor never donated in the timespan of the 
     data.
     """
-    MAXIMUM_SCORE = 4
+
     for index, item in enumerate(ranges):
         if(np.isnan(x)):
             return 0
         if(item[0] <= x and x < item[1]):
-            return MAXIMUM_SCORE - index   
+            return 4 - index   
     
-donation_amts = pd.read_csv('gift_amounts_by_year.csv', 
-    index_col='Constituent ID')
-donation_counts = pd.read_csv('gift_counts_by_year.csv', 
-    index_col='Constituent ID')
+donation_amts = pd.read_csv(GIFT_AMOUNTS_BY_YEAR, index_col=INDEX_COLUMN)
+donation_counts = pd.read_csv(GIFT_COUNTS_BY_YEAR, index_col=INDEX_COLUMN)
 
 rfm_data = pd.concat([recency(donation_amts),
     frequency(donation_counts), 
     monetary_value(donation_amts)], axis=1)
+
 rfm_data['rfm_score'] = (rfm_data['monetary_value'] 
     + rfm_data['frequency'] + rfm_data['recency'])
+    
 print(rfm_data)
